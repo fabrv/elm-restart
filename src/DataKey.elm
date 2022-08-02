@@ -1,13 +1,21 @@
 module DataKey exposing (..)
 
+
 attributePrefix : String
-attributePrefix = "data-er-ui-"
+attributePrefix =
+    "data-er-ui-"
+
 
 propertyPrefix : String
-propertyPrefix = "erUi"
+propertyPrefix =
+    "erUi"
 
-dataAttr: String -> String
-dataAttr name = attributePrefix ++ name
 
-dataProps: String -> String
-dataProps name = propertyPrefix ++ name
+dataAttr : String -> String
+dataAttr name =
+    attributePrefix ++ name
+
+
+dataProps : String -> String
+dataProps name =
+    propertyPrefix ++ name

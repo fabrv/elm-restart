@@ -3,6 +3,7 @@ module Button exposing (Option(..), button)
 import Html
 import Html.Attributes exposing (disabled)
 import List exposing (map)
+import Utils exposing (includesEnum)
 
 
 type ButtonType
@@ -18,7 +19,18 @@ type Option
     | TabIndex Int
     | Target String
     | Rel String
+    | Href String
 
+enumOption : Option -> Int
+enumOption option =
+    case option of
+        Type _ -> 0
+        Disabled _ -> 1
+        Role _ -> 2
+        TabIndex _ -> 3
+        Target _ -> 4
+        Rel _ -> 5
+        Href _ -> 6
 
 attributeMapping : Option -> Html.Attribute msg
 attributeMapping option =
@@ -51,6 +63,8 @@ attributeMapping option =
         Rel rel ->
             Html.Attributes.rel rel
 
+        Href href ->
+            Html.Attributes.href href
 
 button :
     List Option
@@ -58,8 +72,15 @@ button :
     -> List (Html.Html msg)
     -> Html.Html msg
 button options attributes children =
-    Html.button
+    if includesEnum (map enumOption options) 6 then
+        Html.a
         (map attributeMapping options
             ++ attributes
         )
         children
+    else
+        Html.button
+            (map attributeMapping options
+                ++ attributes
+            )
+            children
