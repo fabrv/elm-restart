@@ -1,6 +1,5 @@
 module Main exposing (..)
 
-import Anchor as Anchor
 import Browser
 import Button
 import Dropdown
