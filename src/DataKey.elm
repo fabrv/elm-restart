@@ -1,4 +1,4 @@
-module DataKey exposing (..)
+module DataKey exposing (dataAttr, dataProps)
 
 
 attributePrefix : String
