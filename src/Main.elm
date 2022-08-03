@@ -4,7 +4,7 @@ import Browser
 import Button
 import Dropdown
 import Html exposing (Html, code, div, h1, h2, h3, li, p, pre, text, ul)
-import Html.Attributes exposing (style)
+import Html.Attributes exposing (id, style)
 import Html.Events exposing (onClick)
 
 
@@ -54,7 +54,7 @@ main =
 
 buttonSection : Model -> Html Msg
 buttonSection model =
-    div []
+    div [ id "button" ]
         [ h2 [] [ text "Button" ]
         , p [] [ text "An abstract button component for creating accessible buttons regardless of the HTML element used to render it." ]
         , Button.button [] [ onClick ToggleEnable ] [ text "Click me" ]
@@ -71,7 +71,7 @@ buttonSection model =
                 )
             ]
         , Button.button [ Button.Type Button.Submit ] [] [ text "I'm submit" ]
-        , pre [] [ code [] [ text "[ Button.button [] [ onClick ToggleEnable ] [ text \"I'm a Button\" ]\n, Button.button [ Button.Disabled False ] [] [ text \"I'm disabled\" ]\n]" ] ]
+        , pre [] [ code [] [ text "[ Button.button [] [ onClick ToggleEnable ] [ text \"I'm a Button\" ]\n, Button.button [ Button.Disabled False ] [] [ text \"I'm disabled\" ]\n], Button.button [ Button.Type Button.Submit ] [] [ text \"I'm submit\" ]" ] ]
         , p [] [ text "Not very impressive on its own, but Button does come with a few conveniences over the plain HTML element." ]
         , ul []
             [ li [] [ text "type defaults to button" ]
@@ -88,12 +88,17 @@ buttonSection model =
         ]
 
 
-view : Model -> Html Msg
-view model =
-    div [ style "max-width" "800px", style "margin" "auto" ]
-        [ h1 [] [ text "elm restart" ]
-        , buttonSection model
-        , h2 [] [ text "Dropdown" ]
+dropdownSection : Model -> Html Msg
+dropdownSection model =
+    div [ id "dropdown" ]
+        [ h2 [] [ text "Dropdown" ]
+        , p [] [ text "An abstract component for creating toggeable contextual overlays. It takes 4 arguments wich make the key components for a dropdown" ]
+        , ul []
+            [ li [] [ text "dropdownToggle - This what the user would click to toggle the overlay. (Html Msg)" ]
+            , li [] [ text "options - The state of the overlay, send as boolean with `Dropdown.Show`. (List Dropdown.Option)" ]
+            , li [] [ text "attributes - HTML attributes for the context body. List (Html.Attribute msg)" ]
+            , li [] [ text "children - The context itself, any list of HTML content can be sent List. (Html.Html msg)" ]
+            ]
         , Dropdown.dropdown
             (Button.button [] [ onClick ToggleDropdown ] [ text "Open toggle" ])
             [ Dropdown.Show model.showDropdown ]
@@ -104,4 +109,14 @@ view model =
             [ Button.button [] [] [ text "Action item" ]
             , Button.button [] [] [ text "Action item 2" ]
             ]
+        , pre [] [code [] [ text "Dropdown.dropdown\n            (Button.button [] [ onClick ToggleDropdown ] [ text \"Open toggle\" ])\n            [ Dropdown.Show model.showDropdown ]\n            [ style \"background-color\" \"white\"\n            , style \"border-radius\" \"5px\"\n            , style \"flex-direction\" \"column\"\n            ]\n            [ Button.button [] [] [ text \"Action item\" ]\n            , Button.button [] [] [ text \"Action item 2\" ]\n            ]" ]]
+        ]
+
+
+view : Model -> Html Msg
+view model =
+    div [ style "max-width" "800px", style "margin" "auto" ]
+        [ h1 [] [ text "elm restart" ]
+        , buttonSection model
+        , dropdownSection model
         ]
